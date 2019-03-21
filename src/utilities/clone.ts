@@ -1,5 +1,5 @@
-import * as cloneDeep from "clone-deep";
+import * as clone from "clone";
 
 export default function(data: object) {
-  return cloneDeep(data);
+  return clone(data);
 }
