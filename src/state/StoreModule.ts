@@ -1,6 +1,6 @@
 import { Store } from "vuex";
+import { injectable } from "inversify";
 type GenericObject = { [key: string]: any };
-import { injectable, inject } from "inversify";
 
 @injectable()
 export default class StoreModule {
@@ -13,17 +13,17 @@ export default class StoreModule {
   public mutations: GenericObject = {};
   public $modules: Array<StoreModule> = [];
 
-  setName(name) {
+  setName(name: string): this {
     this.name = name;
     return this;
   }
 
-  addState(state) {
+  addState(state: object) {
     this.state = Object.assign({}, this.state, state);
     return this;
   }
 
-  addActions(actions) {
+  addActions(actions: (() => object) | object): this {
     if (typeof actions === "function") {
       actions = actions();
     }
@@ -31,7 +31,7 @@ export default class StoreModule {
     return this;
   }
 
-  addMutations(mutations) {
+  addMutations(mutations: (() => object) | object): this {
     if (typeof mutations === "function") {
       mutations = mutations();
     }
@@ -39,7 +39,7 @@ export default class StoreModule {
     return this;
   }
 
-  addGetters(getters) {
+  addGetters(getters: (() => object) | object): this {
     if (typeof getters === "function") {
       getters = getters();
     }
@@ -47,7 +47,7 @@ export default class StoreModule {
     return this;
   }
 
-  addModule(store) {
+  addModule(store: StoreModule): this {
     this.$modules.push(store);
     return this;
   }
